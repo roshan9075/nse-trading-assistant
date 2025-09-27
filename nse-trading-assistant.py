@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-NSE Swing Trading Assistant v1.0
+NSE Swing Trading Assistant v1.0 - FIXED VERSION
 Automated personal finance assistant for Indian NSE swing trading
 Target: rpwarade2@gmail.com | Schedule: Daily 8:00 AM IST
+
+FIXED: CSV generation error - all values now properly converted to strings
 """
 
 import pandas as pd
@@ -41,7 +43,7 @@ class NSETradingAssistant:
     def __init__(self, config_path="config.yaml"):
         self.config = self.load_config(config_path)
         self.setup_logging()
-        self.logger.info("🚀 NSE Trading Assistant initialized")
+        self.logger.info("🚀 NSE Trading Assistant initialized - FIXED VERSION")
         
     def load_config(self, config_path):
         if os.path.exists(config_path):
@@ -87,7 +89,8 @@ class NSETradingAssistant:
             # Base prices for major stocks
             base_prices = {
                 'RELIANCE': 2400, 'TCS': 3200, 'HDFCBANK': 1650, 'INFY': 1450,
-                'HINDUNILVR': 2100, 'ITC': 450, 'SBIN': 620
+                'HINDUNILVR': 2100, 'ITC': 450, 'SBIN': 620, 'BHARTIARTL': 850,
+                'KOTAKBANK': 1800, 'LT': 3500
             }
             
             price = base_prices.get(symbol, 1000)
@@ -338,26 +341,35 @@ class NSETradingAssistant:
         return html_start + stock_rows + insights_section + html_end
     
     def generate_csv_data(self, results):
-        """Generate CSV data for attachment"""
-        csv_rows = [['ticker', 'price', 'score', 'action', 'entry', 'stop_loss', 'target_1', 'target_2', 'position_pct', 'rsi', 'trend', 'sentiment']]
-        
-        for stock in results:
-            csv_rows.append([
-                stock['ticker'],
-                f"{stock['current_price']:.2f}",
-                stock['score'],
-                stock['suggested_action'],
-                stock['entry_zone'],
-                stock['stop_loss'],
-                stock['targets'][0],
-                stock['targets'][1],
-                f"{stock['position_size_pct']:.1f}%",
-                stock['rsi'],
-                stock['trend'],
-                stock['news_sentiment']
-            ])
-        
-        return '\n'.join([','.join(row) for row in csv_rows])
+        """Generate CSV data for attachment - FIXED VERSION"""
+        try:
+            # Create header row
+            csv_rows = [['ticker', 'price', 'score', 'action', 'entry', 'stop_loss', 'target_1', 'target_2', 'position_pct', 'rsi', 'trend', 'sentiment']]
+            
+            # Add data rows - CONVERT ALL VALUES TO STRINGS
+            for stock in results:
+                csv_rows.append([
+                    str(stock['ticker']),                    # String
+                    f"{stock['current_price']:.2f}",        # Formatted string
+                    str(stock['score']),                     # String conversion
+                    str(stock['suggested_action']),          # String
+                    str(stock['entry_zone']),                # String
+                    str(stock['stop_loss']),                 # String
+                    str(stock['targets'][0]),                # String
+                    str(stock['targets'][1]),                # String
+                    f"{stock['position_size_pct']:.1f}%",    # Formatted string
+                    str(stock['rsi']),                       # String conversion
+                    str(stock['trend']),                     # String
+                    str(stock['news_sentiment'])             # String
+                ])
+            
+            # Convert to CSV string - NOW ALL VALUES ARE STRINGS
+            return '\n'.join([','.join(row) for row in csv_rows])
+            
+        except Exception as e:
+            self.logger.error(f"Error generating CSV: {e}")
+            # Return basic CSV with just headers if error occurs
+            return "ticker,price,score,action,entry,stop_loss,target_1,target_2,position_pct,rsi,trend,sentiment\n"
     
     def send_email(self, html_content, csv_data):
         """Send email with analysis results"""
@@ -404,7 +416,7 @@ class NSETradingAssistant:
     def run_daily_scan(self):
         """Main execution function"""
         try:
-            self.logger.info("🚀 Starting NSE daily scan")
+            self.logger.info("🚀 Starting NSE daily scan - FIXED VERSION")
             start_time = datetime.now()
             
             # Scan stocks
@@ -439,6 +451,7 @@ class NSETradingAssistant:
         except Exception as e:
             self.logger.error(f"❌ Critical error: {e}")
             self.send_error_notification(str(e))
+            raise e  # Re-raise for debugging
     
     def send_error_notification(self, error):
         """Send error notification"""
@@ -453,7 +466,7 @@ class NSETradingAssistant:
             msg = MIMEMultipart()
             msg['From'] = sender
             msg['To'] = config['recipient_email']
-            msg['Subject'] = "🚨 NSE Trading Assistant Error"
+            msg['Subject'] = "🚨 NSE Trading Assistant Error - FIXED VERSION"
             
             body_html = f"""
             <html><body style="font-family: Arial, sans-serif; padding: 20px;">
@@ -461,6 +474,7 @@ class NSETradingAssistant:
                     <h3>⚠️ Error in NSE Trading Assistant</h3>
                     <p><strong>Time:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S IST')}</p>
                     <p><strong>Error:</strong> {error}</p>
+                    <p>This is the FIXED version that should resolve CSV generation issues.</p>
                     <p>Please check the GitHub Actions logs for details.</p>
                 </div>
             </body></html>
@@ -474,12 +488,17 @@ class NSETradingAssistant:
             server.send_message(msg)
             server.quit()
             
-        except:
-            pass
+            self.logger.info("Error notification sent")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send error notification: {e}")
 
 def main():
-    print("🚀 NSE Swing Trading Assistant")
-    print("=" * 40)
+    print("🚀 NSE Swing Trading Assistant - FIXED VERSION")
+    print("=" * 50)
+    print("✅ Fixed: CSV generation error")
+    print("✅ All values now properly converted to strings")
+    print("=" * 50)
     
     try:
         assistant = NSETradingAssistant()
@@ -488,6 +507,8 @@ def main():
         
     except Exception as e:
         print(f"❌ Application error: {e}")
+        import traceback
+        traceback.print_exc()
         exit(1)
 
 if __name__ == "__main__":
