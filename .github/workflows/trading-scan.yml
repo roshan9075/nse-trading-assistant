@@ -1,0 +1,48 @@
+name: NSE Trading Assistant Daily Scan
+
+on:
+  schedule:
+    - cron: '30 2 * * 1-5'  # 8:00 AM IST = 2:30 AM UTC, weekdays only
+  workflow_dispatch:  # Manual trigger for testing
+
+jobs:
+  nse-trading-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🐍 Setup Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: 📚 Download NLTK data
+      run: |
+        python -c "import nltk; nltk.download('vader_lexicon', quiet=True)"
+    
+    - name: 🚀 Run NSE scan
+      env:
+        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      run: |
+        echo "Starting NSE Trading Assistant..."
+        echo "Current time (IST): $(TZ='Asia/Kolkata' date)"
+        python nse-trading-assistant.py
+    
+    - name: 📊 Upload results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: nse-scan-results-${{ github.run_number }}
+        path: |
+          scan_results_*.json
+          nse_trading_assistant.log
+        retention-days: 30
