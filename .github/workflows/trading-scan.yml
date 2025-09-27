@@ -38,7 +38,7 @@ jobs:
         python nse-trading-assistant.py
     
     - name: 📊 Upload results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: nse-scan-results-${{ github.run_number }}
