@@ -1,0 +1,32 @@
+# NSE Trading Assistant Configuration
+# 🔴 UPDATE: Replace "your-email@gmail.com" with your actual Gmail address
+
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  sender_email: "rpwarade2@gmail.com"      # 🔴 REPLACE WITH YOUR GMAIL
+  sender_password: "tptx axob mpwc slhp"      # 🔴 REPLACE WITH GMAIL APP PASSWORD
+  recipient_email: "rpwarade2@gmail.com"    # ✅ Target email confirmed
+
+technical_analysis:
+  score_thresholds:
+    strong_buy: 85
+    buy: 70
+    watch: 50
+    avoid: 30
+
+universe:
+  tickers:
+    - "RELIANCE"
+    - "TCS"
+    - "HDFCBANK"
+    - "INFY"
+    - "HINDUNILVR"
+    - "ITC"
+    - "SBIN"
+    - "BHARTIARTL"
+    - "KOTAKBANK"
+    - "LT"
+
+logging:
+  level: "INFO"

@@ -1,0 +1,37 @@
+
+NSE TRADING ASSISTANT - DEPLOYMENT INSTRUCTIONS
+Generated: 2025-09-27 18:16:18 IST
+
+FILES CREATED: 6
+TARGET EMAIL: rpwarade2@gmail.com
+SCHEDULE: Daily 8:00 AM IST (weekdays only)
+
+STEP 1: Gmail Setup (5 minutes)
+- Enable 2FA: https://myaccount.google.com/security
+- Generate App Password: https://myaccount.google.com/apppasswords
+- Save the 16-character password
+
+STEP 2: GitHub Setup (5 minutes)
+- Create new repository named 'nse-trading-assistant'
+- Upload all 6 files from this directory
+- Go to Settings → Secrets and variables → Actions
+- Add secrets:
+  - EMAIL_SENDER: your-gmail@gmail.com
+  - EMAIL_PASSWORD: your-16-char-app-password
+
+STEP 3: Test Deployment (3 minutes)
+- Go to Actions tab in your repository
+- Click "NSE Trading Assistant Daily Scan"
+- Click "Run workflow" → "Run workflow"
+- Monitor logs for successful execution
+- Check rpwarade2@gmail.com for test email
+
+STEP 4: Go Live
+- System will automatically run every weekday at 8:00 AM IST
+- No further action required
+- Daily trading insights will arrive at rpwarade2@gmail.com
+
+TOTAL SETUP TIME: ~15 minutes
+COST: $0 (GitHub Actions free tier)
+
+Ready to deploy your NSE Trading Assistant!
