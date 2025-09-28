@@ -39,7 +39,7 @@ data_sources:
 llm:
   primary_model: "gpt-4"            # Primary LLM for analysis
   fallback_model: "gpt-3.5-turbo"  # Backup model
-  google_model: "gemini-pro"       # Google's model for comparison
+  google_model: "gemini-1.5-flash"       # Google's model for comparison
   
   # Model-specific settings
   openai:
