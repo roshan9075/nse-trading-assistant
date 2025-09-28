@@ -46,6 +46,7 @@ jobs:
         echo "  RapidAPI: ${{ secrets.RAPIDAPI_KEY != '' && '✅ Available' || '❌ Missing' }}"
         echo "  OpenAI: ${{ secrets.OPENAI_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
         echo "  Google AI: ${{ secrets.GOOGLE_AI_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
+        echo "  Email Sender: ${{ secrets.EMAIL_SENDER != '' && '✅ Available' || '❌ Missing' }}"
         echo "📊 Starting real market data analysis with AI integration..."
         python nse-trading-assistant-REAL-v3.py
     
