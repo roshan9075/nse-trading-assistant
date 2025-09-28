@@ -560,8 +560,8 @@ class LLMAnalyzer:
         else:
             self.openai_available = False
 
-        self.logger.error("OpenAI_Available : " + self.openai_available)
-            
+        self.logger.info(f"OpenAI_Available : {self.openai_available}")
+
         # Initialize Google AI
         if GOOGLE_AI_AVAILABLE and os.getenv('GOOGLE_AI_API_KEY'):
             genai.configure(api_key=os.getenv('GOOGLE_AI_API_KEY'))
@@ -569,7 +569,7 @@ class LLMAnalyzer:
             self.google_available = True
         else:
             self.google_available = False
-         self.logger.error("Google_AI_Available : " + self.google_available)
+         self.logger.info(f"Google_AI_Available : {self.google_available}")
     
     def analyze_stock_with_llm(self, stock_data: StockData) -> Optional[LLMAnalysis]:
         """Comprehensive LLM analysis of stock"""
@@ -731,7 +731,7 @@ class LLMAnalyzer:
 class NSETradingAssistant:
     """Main NSE Trading Assistant with real data and LLM integration"""
     
-    def __init__(self, config_path="config.yaml", api_config_path="api-config.yaml"):
+    def __init__(self, config_path="config-real.yaml", api_config_path="api-config.yaml"):
         # Load configurations
         self.config = self.load_config(config_path)
         self.api_config = self.load_config(api_config_path)
