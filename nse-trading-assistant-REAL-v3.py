@@ -548,11 +548,12 @@ class YFinanceProvider(DataProvider):
 
 class LLMAnalyzer:
     """LLM-powered stock analysis"""
+
     def __init__(self, api_config: Dict):
         self.config = api_config
         self.logger = logging.getLogger(__name__)
         self.cache = DataCache()
-        
+
         # Initialize OpenAI
         if OPENAI_AVAILABLE and os.getenv('OPENAI_API_KEY'):
             openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -569,7 +570,8 @@ class LLMAnalyzer:
             self.google_available = True
         else:
             self.google_available = False
-         self.logger.info(f"Google_AI_Available : {self.google_available}")
+
+        self.logger.info(f"Google_AI_Available : {self.google_available}")
     
     def analyze_stock_with_llm(self, stock_data: StockData) -> Optional[LLMAnalysis]:
         """Comprehensive LLM analysis of stock"""
