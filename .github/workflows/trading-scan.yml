@@ -50,7 +50,7 @@ jobs:
         python nse-trading-assistant-REAL-v3.py
     
     - name: 📊 Upload results and logs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: nse-ai-analysis-${{ github.run_number }}
