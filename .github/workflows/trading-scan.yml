@@ -9,6 +9,15 @@ jobs:
   nse-ai-trading-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 45  # Increased for LLM API calls
+
+    env:
+        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
     
     steps:
     - name: 📥 Checkout code
@@ -29,14 +38,6 @@ jobs:
         python -c "import nltk; nltk.download('vader_lexicon', quiet=True)"
     
     - name: 🚀 Run NSE AI Analysis
-      env:
-        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-        ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
-        TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
-        RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
       run: |
         echo "🚀 Starting NSE Trading Assistant v3.0 - Real Data + LLM"
         echo "📅 Current time (IST): $(TZ='Asia/Kolkata' date)"
