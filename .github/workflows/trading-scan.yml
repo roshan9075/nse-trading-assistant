@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "Starting NSE Trading Assistant..."
         echo "Current time (IST): $(TZ='Asia/Kolkata' date)"
-        python nse-trading-assistant.py
+        python nse-trading-assistant-dynamic.py
     
     - name: 📊 Upload results
       uses: actions/upload-artifact@v4
