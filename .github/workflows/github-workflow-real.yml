@@ -41,16 +41,16 @@ jobs:
         echo "🚀 Starting NSE Trading Assistant v3.0 - Real Data + LLM"
         echo "📅 Current time (IST): $(TZ='Asia/Kolkata' date)"
         echo "🔑 API Keys status:"
-        echo "  Alpha Vantage: ${{ secrets.ALPHAVANTAGE_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
-        echo "  Twelve Data: ${{ secrets.TWELVE_DATA_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
-        echo "  RapidAPI: ${{ secrets.RAPIDAPI_KEY != '' && '✅ Available' || '❌ Missing' }}"
-        echo "  OpenAI: ${{ secrets.OPENAI_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
-        echo "  Google AI: ${{ secrets.GOOGLE_AI_API_KEY != '' && '✅ Available' || '❌ Missing' }}"
+        echo "  Alpha Vantage: ${{ secrets.ALPHAVANTAGE_API_KEY && '✅ Available' || '❌ Missing' }}"
+        echo "  Twelve Data: ${{ secrets.TWELVE_DATA_API_KEY && '✅ Available' || '❌ Missing' }}"
+        echo "  RapidAPI: ${{ secrets.RAPIDAPI_KEY && '✅ Available' || '❌ Missing' }}"
+        echo "  OpenAI: ${{ secrets.OPENAI_API_KEY && '✅ Available' || '❌ Missing' }}"
+        echo "  Google AI: ${{ secrets.GOOGLE_AI_API_KEY && '✅ Available' || '❌ Missing' }}"
         echo "📊 Starting real market data analysis with AI integration..."
         python nse-trading-assistant-REAL-v3.py
     
     - name: 📊 Upload results and logs
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: nse-ai-analysis-${{ github.run_number }}

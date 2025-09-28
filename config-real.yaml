@@ -1,0 +1,88 @@
+# NSE Trading Assistant v3.0 Configuration
+# Main application configuration - keep email settings here
+# API keys are managed separately in api-config.yaml
+
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  sender_email: "rpwarade2@gmail.com"      # 🔴 REPLACE WITH YOUR GMAIL
+  sender_password: "tptx axob mpwc slhp"      # 🔴 REPLACE WITH GMAIL APP PASSWORD
+  recipient_email: "rpwarade2@gmail.com"    # ✅ Target email confirmed
+
+# Technical Analysis Thresholds
+technical_analysis:
+  score_thresholds:
+    strong_buy: 85
+    buy: 70
+    watch: 50
+    avoid: 30
+  
+  # Combined scoring weights
+  weights:
+    technical_score: 0.4        # 40% traditional technical analysis
+    llm_score: 0.6             # 60% AI/LLM analysis
+  
+  # Quality filters
+  min_combined_score: 45       # Minimum score to include in results
+  min_llm_confidence: 0.3      # Minimum LLM confidence (0-1)
+
+# Stock Universe Configuration
+universe:
+  method: "real_dynamic"       # real_dynamic, curated, nifty_focused
+  
+  # Stock selection criteria
+  max_stocks_to_analyze: 50    # Limit for execution time and API costs
+  min_market_cap: 1000         # Minimum market cap in crores INR
+  min_avg_volume: 100000       # Minimum daily volume
+  exclude_penny_stocks: true   # Skip stocks under ₹10
+  
+  # Curated stock list (fallback if API limits reached)
+  curated_stocks:
+    - "RELIANCE"
+    - "TCS" 
+    - "HDFCBANK"
+    - "INFY"
+    - "HINDUNILVR"
+    - "ITC"
+    - "SBIN"
+    - "BHARTIARTL"
+    - "KOTAKBANK"
+    - "LT"
+    - "ASIANPAINT"
+    - "MARUTI"
+    - "AXISBANK"
+    - "ICICIBANK"
+    - "TITAN"
+
+# Risk Management
+risk_management:
+  max_position_size: 5.0       # Maximum 5% position size
+  default_stop_loss: 0.05      # 5% stop loss
+  target_multipliers:
+    conservative: 1.08         # 8% target
+    aggressive: 1.15           # 15% target
+  
+  # Portfolio allocation
+  max_strong_buy_allocation: 15.0  # Max 15% in strong buy positions
+  max_buy_allocation: 25.0         # Max 25% in buy positions
+
+# Execution Parameters
+execution:
+  max_runtime_minutes: 30      # Maximum execution time
+  parallel_analysis: true      # Enable parallel processing
+  max_concurrent_stocks: 5     # Concurrent stock analysis
+  enable_caching: true         # Cache results to minimize API usage
+  
+# Reporting Configuration
+reporting:
+  max_stocks_in_email: 25      # Stocks to include in email report
+  detailed_analysis_count: 5   # Detailed AI analysis for top N stocks
+  include_risk_factors: true   # Include AI-identified risk factors
+  include_opportunities: true  # Include AI-identified opportunities
+  
+# Logging Configuration
+logging:
+  level: "INFO"               # DEBUG, INFO, WARNING, ERROR
+  log_api_calls: true         # Log API call details
+  log_llm_responses: false    # Don't log LLM responses (privacy)
+  include_performance_metrics: true

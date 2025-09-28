@@ -1,0 +1,129 @@
+# API Configuration - NSE Trading Assistant
+# Keep this file secure and add keys to GitHub Secrets
+
+# Data Source APIs (with rate limits and failover)
+data_sources:
+  primary: "alpha_vantage"           # Primary data source
+  secondary: "twelve_data"           # Secondary source
+  tertiary: "yfinance"              # Backup (free but rate limited)
+  rapidapi_backup: true             # Use RapidAPI as last resort
+
+  # API Endpoints and Limits
+  alpha_vantage:
+    base_url: "https://www.alphavantage.co/query"
+    rate_limit: 5                   # calls per minute (free tier)
+    daily_limit: 150                # daily API calls
+    timeout: 30                     # seconds
+    retry_attempts: 3
+    
+  twelve_data:
+    base_url: "https://api.twelvedata.com"
+    rate_limit: 8                   # calls per minute (free tier)
+    daily_limit: 800                # daily API calls  
+    timeout: 30
+    retry_attempts: 3
+    
+  rapidapi:
+    base_url: "https://rapidapi.com"
+    rate_limit: 10                  # varies by subscription
+    daily_limit: 1000               # varies by subscription
+    timeout: 30
+    retry_attempts: 2
+    
+  yfinance:
+    rate_limit: 2000                # requests per hour (unofficial)
+    timeout: 15
+    retry_attempts: 5               # More retries for free service
+
+# LLM Configuration
+llm:
+  primary_model: "gpt-4"            # Primary LLM for analysis
+  fallback_model: "gpt-3.5-turbo"  # Backup model
+  google_model: "gemini-pro"       # Google's model for comparison
+  
+  # Model-specific settings
+  openai:
+    max_tokens: 4000                # Max response tokens
+    temperature: 0.3                # Lower = more focused analysis
+    timeout: 60                     # seconds
+    retry_attempts: 3
+    
+  google:
+    max_tokens: 8000                # Gemini has higher limits
+    temperature: 0.2                # Even more focused for technical analysis
+    timeout: 45
+    retry_attempts: 3
+
+# News & Sentiment APIs
+news:
+  sources: ["alpha_vantage", "rapidapi", "web_scraping"]
+  sentiment_analysis: "llm"         # Use LLM for sentiment analysis
+  max_articles_per_stock: 5        # Limit articles to analyze per stock
+  
+  alpha_vantage_news:
+    endpoint: "NEWS_SENTIMENT"
+    rate_limit: 5                   # calls per minute
+    
+  rapidapi_news:
+    provider: "financial-news"      # Specific RapidAPI provider
+    rate_limit: 20                  # varies by subscription
+
+# NSE Specific Configuration
+nse:
+  stock_universe: "comprehensive"   # comprehensive, nifty500, nifty100, custom
+  indices_to_scan: 
+    - "NIFTY 50"
+    - "NIFTY 100" 
+    - "NIFTY 200"
+    - "NIFTY 500"
+    - "NIFTY MIDCAP 100"
+    
+  # Data validation
+  min_market_cap: 1000             # Crores INR
+  min_avg_volume: 100000           # Daily volume
+  exclude_penny_stocks: true       # Skip stocks under ₹10
+  
+# Rate Limiting & Failover
+rate_limiting:
+  enable_smart_batching: true      # Batch API calls efficiently
+  respect_rate_limits: true        # Auto-throttle based on limits
+  exponential_backoff: true        # Intelligent retry strategy
+  
+  # Circuit breaker pattern
+  circuit_breaker:
+    failure_threshold: 5           # Failures before switching source
+    recovery_timeout: 300          # Seconds before retrying failed source
+    
+# Caching (to minimize API usage)
+caching:
+  enable: true
+  stock_data_ttl: 300              # Cache stock data for 5 minutes
+  news_data_ttl: 1800              # Cache news for 30 minutes
+  technical_indicators_ttl: 600    # Cache indicators for 10 minutes
+  
+# Performance Optimization
+performance:
+  max_concurrent_requests: 3       # Parallel API requests
+  batch_size: 20                   # Stocks per batch
+  max_execution_time: 1800         # 30 minutes max execution
+  
+  # LLM optimization
+  llm_batch_analysis: true         # Analyze multiple stocks per LLM call
+  enable_caching: true             # Cache LLM responses
+  
+# Quality Control
+quality:
+  min_data_points: 50              # Minimum historical data points
+  require_volume_data: true        # Skip stocks without volume data
+  validate_indicators: true        # Validate technical indicators
+  
+  # LLM analysis quality
+  min_analysis_length: 100         # Minimum characters in LLM analysis
+  require_confidence_score: true   # LLM must provide confidence
+  cross_validate_models: false     # Compare GPT-4 vs Gemini (expensive)
+
+# Emergency Fallback
+fallback:
+  enable_demo_mode: false          # Use simulated data if all APIs fail
+  alert_on_fallback: true          # Send alert if using fallback
+  max_fallback_duration: 86400     # Max seconds in fallback mode (24h)
