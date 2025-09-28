@@ -4,8 +4,8 @@
 email:
   smtp_server: "smtp.gmail.com"
   smtp_port: 587
-  sender_email: "your-email@gmail.com"      # 🔴 REPLACE WITH YOUR GMAIL
-  sender_password: "your-app-password"      # 🔴 REPLACE WITH GMAIL APP PASSWORD
+  sender_email: "rpwarade2@gmail.com"      # 🔴 REPLACE WITH YOUR GMAIL
+  sender_password: "tptx axob mpwc slhp"      # 🔴 REPLACE WITH GMAIL APP PASSWORD
   recipient_email: "rpwarade2@gmail.com"    # ✅ Target email confirmed
 
 technical_analysis:
