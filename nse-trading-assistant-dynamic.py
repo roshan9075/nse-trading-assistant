@@ -40,7 +40,7 @@ except ImportError:
 from bs4 import BeautifulSoup
 
 class NSETradingAssistant:
-    def __init__(self, config_path="config.yaml"):
+    def __init__(self, config_path="config-dynamic.yaml"):
         self.config = self.load_config(config_path)
         self.setup_logging()
         self.logger.info("🚀 NSE Trading Assistant v2.0 - Dynamic Universe")
