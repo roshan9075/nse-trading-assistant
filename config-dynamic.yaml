@@ -1,0 +1,77 @@
+# NSE Trading Assistant Configuration v2.0 - DYNAMIC UNIVERSE
+# 🔴 UPDATE: Replace "your-email@gmail.com" with your actual Gmail address
+
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  sender_email: "your-email@gmail.com"      # 🔴 REPLACE WITH YOUR GMAIL
+  sender_password: "your-app-password"      # 🔴 REPLACE WITH GMAIL APP PASSWORD
+  recipient_email: "rpwarade2@gmail.com"    # ✅ Target email confirmed
+
+technical_analysis:
+  score_thresholds:
+    strong_buy: 85
+    buy: 70
+    watch: 50
+    avoid: 30
+
+# 🚀 NEW: Dynamic Universe Configuration
+universe:
+  method: "dynamic"                          # "dynamic" or "static"
+  
+  # Dynamic scanning parameters
+  indices_to_scan:                          # NSE indices to include
+    - "NIFTY 50"
+    - "NIFTY 100" 
+    - "NIFTY 200"
+    - "NIFTY 500"
+  
+  # Filtering criteria
+  min_market_cap: 1000                      # Minimum market cap in crores INR
+  min_avg_volume: 100000                    # Minimum average daily volume
+  max_stocks_to_analyze: 150                # Limit stocks to prevent timeout
+  
+  # Optional exclusions
+  exclude_sectors:                          # Sectors to exclude (optional)
+    # - "FINANCE"                          # Uncomment to exclude financial stocks
+    # - "PHARMA"                           # Uncomment to exclude pharma stocks
+  
+  exclude_tickers:                          # Specific tickers to exclude
+    # - "SYMBOL1"                          # Add any specific stocks to exclude
+    # - "SYMBOL2"
+  
+  # Fallback configuration (used if dynamic fetching fails)
+  fallback_tickers:
+    - "RELIANCE"
+    - "TCS"
+    - "HDFCBANK"
+    - "INFY"
+    - "HINDUNILVR"
+    - "ITC"
+    - "SBIN"
+    - "BHARTIARTL"
+    - "KOTAKBANK"
+    - "LT"
+    - "ASIANPAINT"
+    - "MARUTI"
+    - "WIPRO"
+    - "AXISBANK"
+    - "ICICIBANK"
+
+# Advanced filtering (future enhancements)
+advanced_filters:
+  enable_smart_filtering: true              # Use AI to filter based on patterns
+  min_score_threshold: 45                   # Only include stocks with score >= 45
+  diversification_by_sector: true          # Ensure sector diversification
+  max_stocks_per_sector: 8                 # Maximum stocks per sector in results
+
+# Performance tuning
+performance:
+  batch_size: 50                           # Process stocks in batches
+  rate_limit_delay: 0.1                   # Seconds between API calls
+  timeout_minutes: 25                      # Maximum execution time
+  
+# Logging configuration  
+logging:
+  level: "INFO"                            # DEBUG, INFO, WARNING, ERROR
+  include_stock_details: true             # Log individual stock analysis
