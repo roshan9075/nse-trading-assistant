@@ -559,6 +559,8 @@ class LLMAnalyzer:
             self.openai_available = True
         else:
             self.openai_available = False
+
+        self.logger.error("OpenAI_Available : " + self.openai_available)
             
         # Initialize Google AI
         if GOOGLE_AI_AVAILABLE and os.getenv('GOOGLE_AI_API_KEY'):
@@ -567,6 +569,7 @@ class LLMAnalyzer:
             self.google_available = True
         else:
             self.google_available = False
+         self.logger.error("Google_AI_Available : " + self.google_available)
     
     def analyze_stock_with_llm(self, stock_data: StockData) -> Optional[LLMAnalysis]:
         """Comprehensive LLM analysis of stock"""
