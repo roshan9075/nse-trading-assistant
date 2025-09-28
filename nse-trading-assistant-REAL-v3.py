@@ -667,7 +667,7 @@ class LLMAnalyzer:
     def _analyze_with_openai(self, prompt: str, symbol: str) -> Optional[LLMAnalysis]:
         """Analyze using OpenAI GPT-4"""
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are a professional stock analyst with expertise in Indian stock markets and NSE trading."},
